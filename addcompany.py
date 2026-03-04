@@ -14,8 +14,8 @@ CONN_STRING = (
 )
 
 
-@st.cache_resource
 def get_conn():
+    """Neue Verbindung pro Streamlit-Rerun — vermeidet Timeout-Probleme mit Neon."""
     return psycopg2.connect(CONN_STRING)
 
 
@@ -194,3 +194,5 @@ else:
         sel = st.selectbox("Unternehmen", list(options.keys()))
         company_id = options[sel]
         st.dataframe(get_meta(c, company_id), use_container_width=True, hide_index=True)
+
+c.close()
